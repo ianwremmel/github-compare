@@ -1,0 +1,13 @@
+TODO 
+
+- deploy
+- test
+- fetch repos
+- fetch tags
+- render one at a time
+- login
+- autopopulate source org as current user
+- autopopulate source org options as user's member orgs
+- autopopulate forks
+- analytics
+- fancy transitions
