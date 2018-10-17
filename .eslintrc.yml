@@ -1,4 +1,3 @@
 extends:
-  - "plugin:@ianwremmel/ianwremmel/universal"
-parserOptions:
-  sourceType: "script"
+  - "plugin:vue/recommended"
+  - "plugin:@ianwremmel/ianwremmel/modern"

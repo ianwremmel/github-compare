@@ -8,14 +8,18 @@
     "type": "git",
     "url": "git://github.com/ianwremmel/github-compare.git"
   },
+  "private": true,
   "scripts": {
+    "prebuild": "rimraf dist",
     "build": "npm-run-all build:*",
+    "build:dist": "vue-cli-service build",
     "build:readme": "markdown-toc -i --bullets='-' --maxdepth=3  README.md  && prettier --write README.md",
     "eslint": "eslint --ignore --ignore-path .gitignore",
     "lint": "npm-run-all lint:*",
     "lint:changelog": "commitlint --from origin/master --to HEAD",
     "lint:js": "npm run --silent eslint -- .",
     "semantic-release": "semantic-release",
+    "start": "vue-cli-service serve",
     "test": "echo 'no tests specified'; exit 1"
   },
   "engines": {
@@ -24,12 +28,19 @@
   "keywords": [],
   "author": "Ian Remmel <1182361+ianwremmel@users.noreply.github.com>",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "vue": "^2.5.17"
+  },
   "devDependencies": {
+    "@babel/core": "^7.1.2",
     "@commitlint/cli": "^7.2.1",
     "@commitlint/config-conventional": "^7.1.2",
     "@ianwremmel/eslint-plugin-ianwremmel": "^2.0.0",
+    "@vue/cli-plugin-babel": "^3.0.5",
+    "@vue/cli-service": "^3.0.5",
+    "autoprefixer": "^9.2.1",
     "condition-circle": "^1.6.0",
+    "cssnano": "^4.1.4",
     "eslint": "^5.7.0",
     "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-comments": "^1.0.0",
@@ -39,12 +50,16 @@
     "eslint-plugin-markdown": "^1.0.0-beta.6",
     "eslint-plugin-mocha": "^5.2.0",
     "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-vue": "^4.7.1",
     "husky": "^1.1.2",
     "lint-staged": "^7.3.0",
     "markdown-toc": "^1.2.0",
     "npm-run-all": "^4.1.3",
+    "postcss-import": "^12.0.0",
     "prettier": "^1.14.3",
-    "semantic-release": "^15.9.17"
+    "rimraf": "^2.6.2",
+    "semantic-release": "^15.9.17",
+    "vue-template-compiler": "^2.5.17"
   },
   "lint-staged": {
     "*.js": "npm run eslint -- ",
