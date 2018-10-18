@@ -1,0 +1,15 @@
+env:
+  node: true
+  "webdriverio/wdio": true
+
+plugins:
+  - webdriverio
+
+rules:
+  new-cap:
+    - error
+    - capIsNewExceptions:
+        - And
+        - Given
+        - Then
+        - When
