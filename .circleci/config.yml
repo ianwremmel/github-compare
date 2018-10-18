@@ -76,6 +76,7 @@ workflows:
           requires:
             - install
       - test:
+          context: browser-testing
           requires:
             - install
       - release:
