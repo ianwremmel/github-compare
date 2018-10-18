@@ -20,7 +20,7 @@
     "lint:js": "npm run --silent eslint -- .",
     "semantic-release": "semantic-release",
     "start": "vue-cli-service serve",
-    "test": "echo 'no tests specified'; exit 1"
+    "test": "DEBUG='@ianwremmel/github-compare:test*' PORT=8080 wdio"
   },
   "engines": {
     "node": ">=10"
@@ -40,6 +40,7 @@
     "@vue/cli-plugin-babel": "^3.0.5",
     "@vue/cli-service": "^3.0.5",
     "autoprefixer": "^9.2.1",
+    "chai": "^4.2.0",
     "condition-circle": "^1.6.0",
     "cssnano": "^4.1.4",
     "eslint": "^5.7.0",
@@ -52,6 +53,7 @@
     "eslint-plugin-mocha": "^5.2.0",
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-vue": "^4.7.1",
+    "eslint-plugin-webdriverio": "^1.0.1",
     "husky": "^1.1.2",
     "lint-staged": "^7.3.0",
     "markdown-toc": "^1.2.0",
@@ -60,7 +62,15 @@
     "prettier": "^1.14.3",
     "rimraf": "^2.6.2",
     "semantic-release": "^15.9.17",
-    "vue-template-compiler": "^2.5.17"
+    "vue-template-compiler": "^2.5.17",
+    "wdio": "^2.0.2",
+    "wdio-cucumber-framework": "^2.2.7",
+    "wdio-dot-reporter": "0.0.10",
+    "wdio-junit-reporter": "^0.4.4",
+    "wdio-sauce-service": "^0.4.11",
+    "wdio-screenshots-cleanup-service": "0.0.7",
+    "wdio-selenium-standalone-service": "0.0.10",
+    "wdio-spec-reporter": "^0.1.5"
   },
   "lint-staged": {
     "*.js": "npm run eslint -- ",
