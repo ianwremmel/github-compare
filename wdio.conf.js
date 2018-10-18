@@ -1,6 +1,8 @@
+const http = require('http');
 const path = require('path');
 
 const mkdirp = require('mkdirp');
+const nstatic = require('node-static');
 const uuid = require('uuid');
 
 const CI = !!process.env.CI;
@@ -188,6 +190,19 @@ exports.config = {
         cap.base = 'SauceLabs';
       });
     }
+
+    const file = new nstatic.Server('./dist');
+
+    http
+      .createServer((request, response) => {
+        request
+          .addListener('end', () => {
+            file.serve(request, response);
+          })
+          .resume();
+      })
+      .listen(process.env.PORT)
+      .unref();
   },
   /**
    * Gets executed just before initialising the webdriver session and test framework. It allows you
