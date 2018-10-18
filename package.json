@@ -18,7 +18,6 @@
     "lint": "npm-run-all lint:*",
     "lint:changelog": "commitlint --from origin/master --to HEAD",
     "lint:js": "npm run --silent eslint -- .",
-    "semantic-release": "semantic-release",
     "start": "vue-cli-service serve",
     "test": "DEBUG='@ianwremmel/github-compare:test*' PORT=8080 wdio"
   },
@@ -62,7 +61,6 @@
     "postcss-import": "^12.0.0",
     "prettier": "^1.14.3",
     "rimraf": "^2.6.2",
-    "semantic-release": "^15.9.17",
     "vue-template-compiler": "^2.5.17",
     "wdio": "^2.0.2",
     "wdio-cucumber-framework": "^2.2.7",
