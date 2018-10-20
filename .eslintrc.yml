@@ -1,3 +1,14 @@
 extends:
   - "plugin:vue/recommended"
   - "plugin:@ianwremmel/ianwremmel/modern"
+overrides:
+  - files: '*.vue'
+    rules:
+      require-jsdoc: off
+      sort-keys: off
+settings:
+  "import/resolver":
+    node:
+      extensions:
+        - ".js"
+        - ".vue"

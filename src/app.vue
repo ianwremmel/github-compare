@@ -1,52 +1,55 @@
 <template>
-  <div class="container-fluid">
-    <div class="row">
-      <form class="col">
-        <div class="form-group">
-          <label for="from-org-name">Org or Username</label>
-          <input class="form-control org-name" id="from-org-name" placeholder="Org or Username" v-model="fromOrgName">
-        </div>
-        <div class="form-group">
-          <label for="from-repo-name">Repository</label>
-          <input class="form-control repo-name" id="from-repo-name" placeholder="Repo" v-model="fromRepoName">
-        </div>
-        <div class="form-group">
-          <label for="from-ref">From Ref</label>
-          <input class="form-control tag" id="from-ref" placeholder="From Ref" v-model="fromRef">
-        </div>
+  <div class="d-flex flex-column flex-row flex-items-center">
+    <div class="col">
+      <form>
+        <FormInput
+          id="from-org-name"
+          v-model="fromOrgName"
+          placeholder="Org or Username"
+          required
+        />
+        <FormInput
+          id="from-repo-name"
+          v-model="fromRepoName"
+          placeholder="Repository"
+          required
+        />
+        <FormInput
+          id="fork-owner"
+          v-model="forkOwner"
+          placeholder="Fork Owner"
+        />
+        <FormInput
+          id="from-ref"
+          v-model="fromRef"
+          placeholder="From Ref"
+          required
+        />
+        <FormInput
+          id="to-ref"
+          v-model="toRef"
+          placeholder="To Ref"
+          required
+        />
       </form>
-      <form class="col">
-        <div class="form-group">
-          <label for="to-ref">To Ref</label>
-          <input class="form-control tag" id="to-ref" placeholder="To Ref" v-model="toRef">
-        </div>
-      </form>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Your compare url</h5>
-            <p class="card-text"><a :href="compareUrl">{{compareUrl}}</a></p>
-          </div>
-        </div>
-      </div>
+
+      <Box title="Your compare url">
+        <template slot="body"><a :href="compareUrl">{{ compareUrl }}</a></template>
+      </Box>
+
     </div>
   </div>
 </template>
 
 <script>
+import FormInput from './components/form-input';
+import Box from './components/box';
+
 export default {
-  name: 'app',
-  computed: {
-    compareUrl() {
-      if (this.fromOrgName === this.forkOwner || !this.forkOwner) {
-        return `https://github.com/${this.fromOrgName}/${this.fromRepoName}/compare/${this.fromRef}...${this.toRef}`
-      }
-      else {
-        return `https://github.com/${this.fromOrgName}/${this.fromRepoName}/compare/${this.fromRef}...${this.forkOwner}:${this.toRef}`
-      }
-    }
+  name: 'App',
+  components: {
+    Box,
+    FormInput
   },
   data() {
     return {
@@ -54,16 +57,27 @@ export default {
       fromRepoName: '',
       fromRef: '',
       forkOwner: '',
-      toRef: '',
+      toRef: ''
     };
+  },
+  computed: {
+    compareUrl() {
+      if (this.fromOrgName === this.forkOwner || !this.forkOwner) {
+        return `https://github.com/${this.fromOrgName}/${
+          this.fromRepoName
+        }/compare/${this.fromRef}...${this.toRef}`;
+      }
+      return `https://github.com/${this.fromOrgName}/${
+        this.fromRepoName
+      }/compare/${this.fromRef}...${this.forkOwner}:${this.toRef}`;
+    }
   }
-}
+};
 </script>
 
 <style>
-@import 'bootstrap';
+@import 'primer';
 </style>
 
 <style scoped>
 </style>
-
