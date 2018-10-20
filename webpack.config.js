@@ -4,6 +4,7 @@ const path = require('path');
 
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const PROD = process.env.NODE_ENV === 'production';
 
@@ -41,6 +42,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist')
   },
   plugins: [
+    new LodashModuleReplacementPlugin(),
     PROD &&
       new MiniCssExtractPlugin({
         chunkFilename: '[id].css',
