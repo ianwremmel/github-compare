@@ -28,9 +28,11 @@
   "author": "Ian Remmel <1182361+ianwremmel@users.noreply.github.com>",
   "license": "MIT",
   "dependencies": {
+    "@octokit/rest": "^15.15.1",
     "lodash": "^4.17.11",
     "primer": "^10.8.1",
-    "vue": "^2.5.17"
+    "vue": "^2.5.17",
+    "vue-select": "^2.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",

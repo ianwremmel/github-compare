@@ -1,19 +1,25 @@
 <template>
   <div class="d-flex flex-column flex-row flex-items-center">
     <div class="col">
+      <button type="button" @click="login">Login</button>
       <form>
         <FormInput
           id="from-org-name"
           v-model="fromOrgName"
           placeholder="Org or Username"
           required
+          @input="onOrgChange"
         />
         <FormInput
           id="from-repo-name"
           v-model="fromRepoName"
           placeholder="Repository"
           required
-        />
+        >
+          <template slot="input" slot-scope="{id, placeholder, value}">
+            <v-select :id="id" :placeholder="placeholder" :value="value"/>
+          </template>
+        </FormInput>
         <FormInput
           id="fork-owner"
           v-model="forkOwner"
@@ -42,14 +48,45 @@
 </template>
 
 <script>
+import {debounce} from 'lodash';
+import Github from '@octokit/rest';
 import FormInput from './components/form-input';
 import Box from './components/box';
+import VueSelect from 'vue-select';
+/**
+ * @param {Github} github
+ * @param {string} orgOrUser
+ */
+async function getRepos(github, orgOrUser) {
+  try {
+    const userRepos = await github.repos.getForUser({
+      username: orgOrUser,
+      type: 'owner'
+    });
+    console.log(userRepos);
+    return userRepos.data;
+  } catch (err) {
+    if (err.code !== 404) {
+      throw err;
+    }
+
+    const orgRepos = await github.repos.getForOrg({
+      org: orgOrUser,
+      type: 'sources'
+    });
+    console.log(orgRepos);
+    return orgRepos.data;
+  }
+}
+
+const github = new Github();
 
 export default {
   name: 'App',
   components: {
     Box,
-    FormInput
+    FormInput,
+    'v-select': VueSelect
   },
   data() {
     return {
@@ -57,7 +94,8 @@ export default {
       fromRepoName: '',
       fromRef: '',
       forkOwner: '',
-      toRef: ''
+      toRef: '',
+      repos: []
     };
   },
   computed: {
@@ -71,6 +109,33 @@ export default {
         this.fromRepoName
       }/compare/${this.fromRef}...${this.forkOwner}:${this.toRef}`;
     }
+  },
+  methods: {
+    async login() {
+      try {
+        const res = await github.authenticate({
+          type: 'oauth',
+          key: '89062d8d218f080bb807',
+          secret: '432169636cc53c11106c7b41254bd2939e846f3b'
+        });
+        console.log(res);
+
+        const user = await github.users.get();
+        console.log(user);
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    onOrgChange: debounce(async function onOrgChange(event) {
+      try {
+        const repos = await getRepos(github, this.fromOrgName);
+        this.repos = repos.map((repo) => repo.name);
+      } catch (err) {
+        if (err.code !== 404) {
+          console.error(err);
+        }
+      }
+    }, 200)
   }
 };
 </script>
