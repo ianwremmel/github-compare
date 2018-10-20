@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import url from 'url';
 import {debounce} from 'lodash';
 import Github from '@octokit/rest';
 import FormInput from './components/form-input';
@@ -81,6 +82,19 @@ async function getRepos(github, orgOrUser) {
 
 const github = new Github();
 
+const loginUrl = url.format({
+  protocol: 'https',
+  host: 'github.com',
+  pathname: 'login/oauth/authorize',
+  query: {
+    client_id: '89062d8d218f080bb807',
+    redirect_uri: window.location.href,
+    scope: 'repo'
+  }
+});
+
+console.log(loginUrl);
+
 export default {
   name: 'App',
   components: {
@@ -111,20 +125,8 @@ export default {
     }
   },
   methods: {
-    async login() {
-      try {
-        const res = await github.authenticate({
-          type: 'oauth',
-          key: '89062d8d218f080bb807',
-          secret: '432169636cc53c11106c7b41254bd2939e846f3b'
-        });
-        console.log(res);
-
-        const user = await github.users.get();
-        console.log(user);
-      } catch (err) {
-        console.error(err);
-      }
+    login() {
+      window.location = loginUrl;
     },
     onOrgChange: debounce(async function onOrgChange(event) {
       try {
