@@ -62,7 +62,7 @@
     "prettier": "^1.14.3",
     "rimraf": "^2.6.2",
     "vue-template-compiler": "^2.5.17",
-    "wdio": "^2.0.2",
+    "wdio": "^3.0.3",
     "wdio-cucumber-framework": "^2.2.7",
     "wdio-dot-reporter": "0.0.10",
     "wdio-junit-reporter": "^0.4.4",
